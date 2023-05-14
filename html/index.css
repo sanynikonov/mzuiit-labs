@@ -1,0 +1,20 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    background-color: #303030;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #fc03a5;
+    text-shadow:
+            -1px -1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff;
+}
