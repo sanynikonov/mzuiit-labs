@@ -20,6 +20,7 @@ terraform {
 # The latest version of the Azure provider breaks backward compatibility.
 # TODO: Update this code to use the latest provider.
 provider "azurerm" {
+  skip_provider_registration = "true"
   version = "=1.44.0"
 }
 
