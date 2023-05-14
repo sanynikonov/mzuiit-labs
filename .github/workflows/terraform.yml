@@ -43,7 +43,7 @@ jobs:
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'plan'
+        tf_actions_subcommand: 'plan -out main.tfplan'
         tf_actions_working_dir: "./terraform"
 
     - name: Terraform Apply
@@ -51,5 +51,5 @@ jobs:
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'apply'
+        tf_actions_subcommand: 'apply main.tfplan'
         tf_actions_working_dir: "./terraform"
