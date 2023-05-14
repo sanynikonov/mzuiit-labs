@@ -15,7 +15,6 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
     runs-on: ubuntu-latest
-    environment: dev
 
     defaults:
       run:
@@ -45,13 +44,11 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'plan'
         tf_actions_working_dir: "./terraform"
-        args: '-out main.tfplan'
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'apply "main.tfplan"'
+        tf_actions_subcommand: 'apply'
         tf_actions_working_dir: "./terraform"
-        #args: '"main.tfplan"'
