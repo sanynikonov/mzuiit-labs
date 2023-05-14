@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Run linter
+      run: npm run lint
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag sanynikonov/mzuiit:1.0
+      
+    - name: Push image to registry
+      run: docker image push sanynikonov/mzuiit:1.0
