@@ -18,6 +18,13 @@ jobs:
     - name: Run linter
       run: npm run lint
     
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        logout: true
+    
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag sanynikonov/mzuiit:1.0
       
