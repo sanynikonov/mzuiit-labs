@@ -13,8 +13,8 @@ main {
 h1 {
     color: #fc03a5;
     text-shadow:
-            -1px -1px 0 #fff,
-            1px -1px 0 #fff,
-            -1px 1px 0 #fff,
-            1px 1px 0 #fff;
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px 1px 0 #000,
+            1px 1px 0 #000;
 }
