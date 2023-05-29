@@ -1,10 +1,4 @@
-name: 'Terraform'
-
-on:
-  push:
-    branches:
-    - master
-  pull_request:
+name: Terraform
 
 jobs:
   terraform:
@@ -35,13 +29,3 @@ jobs:
 
     - name: Terraform Apply
       run: ./terraform/terraform -chdir=terraform apply -auto-approve
-
-    - uses: Azure/login@v1
-      with:
-        creds: '{"clientId":"${{ secrets.AZURE_AD_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_AD_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_AD_TENANT_ID }}"}'
-
-    - name: Install Docker
-      with:
-        azcliversion: 2.30.0
-        inlineScript: |
-          az vm run-command invoke -g mzuiit-tf -n mzuiit-tf-vm --command-id RunShellScript --scripts "apt-get update && apt-get install -y nginx"
