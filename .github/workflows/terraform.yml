@@ -18,15 +18,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+      continue-on-error: true
 
     - name: Terraform Init
-      run: ./terraform/terraform -chdir=terraform init
+      id: init
+      run: terraform init
 
     - name: Terraform Validate
-      run: ./terraform/terraform -chdir=terraform validate
+      id: validate
+      run: terraform validate -no-color
 
     - name: Terraform Plan
-      run: ./terraform/terraform -chdir=terraform plan
+      id: plan
+      run: terraform plan -no-color
 
-    - name: Terraform Apply
-      run: ./terraform/terraform -chdir=terraform apply -auto-approve
+    - name: Terraform Plan
+      id: plan
+      run: terraform apply -auto-approve
