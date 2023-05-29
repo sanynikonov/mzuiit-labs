@@ -23,32 +23,25 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-        
-    - name: 'Terraform Init'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'init'
-        tf_actions_working_dir: "./terraform"
 
-    - name: 'Terraform Validate'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'validate'
-        tf_actions_working_dir: "./terraform"
-        
-    - name: 'Terraform Plan'
-      uses: hashicorp/terraform-github-actions@master
-      with:
-        tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'plan'
-        tf_actions_working_dir: "./terraform"
+    - name: Terraform Init
+      run: ./terraform/terraform -chdir=terraform init
+
+    - name: Terraform Validate
+      run: ./terraform/terraform -chdir=terraform validate
+
+    - name: Terraform Plan
+      run: ./terraform/terraform -chdir=terraform plan
 
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main'
-      uses: hashicorp/terraform-github-actions@master
+      run: ./terraform/terraform -chdir=terraform apply -auto-approve
+
+    - uses: Azure/login@v1
       with:
-        tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'apply'
-        tf_actions_working_dir: "./terraform"
+        creds: '{"clientId":"${{ secrets.AZURE_AD_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_AD_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_AD_TENANT_ID }}"}'
+
+    - name: Install Docker
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az vm run-command invoke -g mzuiit-tf -n mzuiit-tf-vm --command-id RunShellScript --scripts "apt-get update && apt-get install -y nginx"
